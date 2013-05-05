@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityReplication", "EntityReplication\EntityReplication.csproj", "{6DB777A4-D9A2-4774-8FAE-162842FDFD3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityReplication.Tests", "EntityReplication.Tests\EntityReplication.Tests.csproj", "{76EC1D98-7CCB-4758-ACDE-461DBD67EAE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DB777A4-D9A2-4774-8FAE-162842FDFD3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DB777A4-D9A2-4774-8FAE-162842FDFD3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DB777A4-D9A2-4774-8FAE-162842FDFD3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DB777A4-D9A2-4774-8FAE-162842FDFD3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76EC1D98-7CCB-4758-ACDE-461DBD67EAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76EC1D98-7CCB-4758-ACDE-461DBD67EAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76EC1D98-7CCB-4758-ACDE-461DBD67EAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76EC1D98-7CCB-4758-ACDE-461DBD67EAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
