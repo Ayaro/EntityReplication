@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultValueExpressionBuilder.cs" />
     <Compile Include="DefaultValueProviderDelegate.cs" />
     <Compile Include="DefaultValuesFactory.cs" />
     <Compile Include="MemberInitContainer.cs" />

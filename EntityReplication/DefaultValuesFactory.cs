@@ -11,24 +11,26 @@ namespace EntityReplication
 
         internal MemberBinding DefaultValueBinding(ParameterExpression parameterExpression, PropertyInfo propertyInfo)
         {
-            Type propertyType = propertyInfo.PropertyType;
-            Expression defaultValueExpression;
+            Expression defaultValueExpression = buildBindingExpression(parameterExpression, propertyInfo);
+            MemberBinding memberBinding = Expression.Bind(propertyInfo, defaultValueExpression);
 
-            Delegate @delegate;
-            if (_defaultValueProviders.TryGetValue(propertyType, out @delegate))
-            {
-                var arguments = new Expression[] { parameterExpression, Expression.Constant(propertyInfo) };
+            return memberBinding;
+        }
 
-                defaultValueExpression = @delegate.Target == null
-                                       ? Expression.Call(@delegate.Method, arguments)
-                                       : Expression.Call(Expression.Constant(@delegate.Target), @delegate.Method, arguments);
-            }
-            else
-            {
-                defaultValueExpression = Expression.Default(propertyType);
-            }
+        private Expression buildBindingExpression(ParameterExpression parameterExpression, PropertyInfo propertyInfo)
+        {
+            var defaultValueExpressionBuilder = new DefaultValueExpressionBuilder(parameterExpression, propertyInfo);
+            Delegate defaultValueProvider = defaultValueProviderOrNull(propertyInfo.PropertyType);
 
-            return Expression.Bind(propertyInfo, defaultValueExpression);
+            return defaultValueExpressionBuilder.BuildExpression(defaultValueProvider);
+        }
+
+        private Delegate defaultValueProviderOrNull(Type type)
+        {
+            Delegate defaultValueProvider;
+            _defaultValueProviders.TryGetValue(type, out defaultValueProvider);
+
+            return defaultValueProvider;
         }
 
         internal void SetDefaultValueProvider<TValue>(DefaultValueProviderDelegate<TId, TValue> defaultValueProviderDelegate)

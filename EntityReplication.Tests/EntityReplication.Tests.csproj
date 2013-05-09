@@ -52,6 +52,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DefaultValueExpressionBuilderTests.cs" />
+    <Compile Include="DefaultValuesFactoryTests.cs" />
     <Compile Include="ReplicatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
