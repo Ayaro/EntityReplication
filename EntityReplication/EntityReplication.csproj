@@ -42,7 +42,12 @@
     <Compile Include="DefaultValueExpressionBuilder.cs" />
     <Compile Include="DefaultValueProviderDelegate.cs" />
     <Compile Include="DefaultValuesFactory.cs" />
-    <Compile Include="MemberInitContainer.cs" />
+    <Compile Include="ExpressionParsing\ExpressionContainer.cs" />
+    <Compile Include="ExpressionParsing\IExpressionContainer.cs" />
+    <Compile Include="ExpressionParsing\ExpressionContainerFactory.cs" />
+    <Compile Include="ExpressionParsing\MemberInitExpressionContainer.cs" />
+    <Compile Include="ExpressionParsing\NewExpressionContainer.cs" />
+    <Compile Include="ExpressionParsing\ParameterizedExpressionContainerBase.cs" />
     <Compile Include="Replicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
