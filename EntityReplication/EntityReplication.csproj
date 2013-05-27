@@ -48,6 +48,8 @@
     <Compile Include="ExpressionParsing\MemberInitExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\NewExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\ParameterizedExpressionContainerBase.cs" />
+    <Compile Include="IPrototypesStorage.cs" />
+    <Compile Include="PrototypesStorage.cs" />
     <Compile Include="Replicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
