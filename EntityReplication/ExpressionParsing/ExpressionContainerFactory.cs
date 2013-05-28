@@ -4,7 +4,7 @@ namespace EntityReplication.ExpressionParsing
 {
     internal static class ExpressionContainerFactory
     {
-        internal static IExpressionContainer Create(LambdaExpression lambdaExpression)
+        internal static IExpressionContainer Parse(LambdaExpression lambdaExpression)
         {
             if (lambdaExpression == null)
             {

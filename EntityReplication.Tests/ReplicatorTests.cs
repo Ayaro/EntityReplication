@@ -27,7 +27,7 @@ namespace EntityReplication.Tests
         [Test]
         public void ShouldReplicatePropertyFromPrototype()
         {
-            _replicator.Storage.SetPrototype(id => new TestClass { Property = id });
+            _replicator.SetPrototype(id => new TestClass { Property = id });
             TestClass result = _replicator.Produce(Standard, () => new TestClass());
 
             Assert.IsNotNull(result);
@@ -37,7 +37,7 @@ namespace EntityReplication.Tests
         [Test]
         public void ShouldReplicatePropertyWithDefaultValue()
         {
-            _replicator.Storage.SetProvider((id, propertyInfo) => id);
+            _replicator.SetProvider((id, propertyInfo) => id);
             TestClass result = _replicator.Produce(Standard, () => new TestClass());
 
             Assert.IsNotNull(result);
@@ -47,7 +47,7 @@ namespace EntityReplication.Tests
         [Test]
         public void ShouldReplicatePropertyWithoutUsingExpression()
         {
-            _replicator.Storage.SetProvider((id, propertyInfo) => id);
+            _replicator.SetProvider((id, propertyInfo) => id);
             TestClass result = _replicator.Produce<TestClass>(Standard);
 
             Assert.IsNotNull(result);

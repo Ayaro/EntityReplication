@@ -1,38 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using EntityReplication.ExpressionParsing;
+using EntityReplication.DefaultValues;
+using EntityReplication.PrototypesStorage;
 
 namespace EntityReplication
 {
     public class Replicator<TIdentifier>
     {
-        private readonly PrototypesStorage<TIdentifier> _prototypesStorage = new PrototypesStorage<TIdentifier>();
-        public IPrototypesStorage<TIdentifier> Storage { get { return _prototypesStorage; } }
+        private readonly IDefaultValuesFactory<TIdentifier> _defaultValuesFactory;
+        private readonly IPrototypesStorage<TIdentifier> _prototypesStorage;
+        private readonly ICreationalMethodBuilder<TIdentifier> _creationalMethodBuilder;
 
-        public TEntity Produce<TEntity>(TIdentifier id, Expression<Func<TEntity>> prototypeExpression = null) where TEntity : new()
+        public Replicator()
+            : this(new DefaultValuesFactory<TIdentifier>())
         {
-            IExpressionContainer prototypeContainer = _prototypesStorage.GetStoredPrototype(typeof(TEntity));
-            IExpressionContainer requestedEntityContainer = ExpressionContainerFactory.Create(prototypeExpression);
+        }
 
-            var memberBindings = new List<MemberBinding>(requestedEntityContainer.MemberBindings);
-            var presentMembers = new HashSet<MemberInfo>(memberBindings.Select(x => x.Member));
+        internal Replicator(IDefaultValuesFactory<TIdentifier> defaultValuesFactory)
+            : this(defaultValuesFactory, new PrototypesStorage<TIdentifier>(defaultValuesFactory))
+        {
+        }
 
-            foreach (MemberBinding memberBinding in prototypeContainer.MemberBindings)
-            {
-                if (!presentMembers.Contains(memberBinding.Member))
-                {
-                    memberBindings.Add(memberBinding);
-                }
-            }
+        internal Replicator(IDefaultValuesFactory<TIdentifier> defaultValuesFactory, IPrototypesStorage<TIdentifier> prototypesStorage)
+            : this(defaultValuesFactory, prototypesStorage, new CreationalMethodBuilder<TIdentifier>(prototypesStorage))
+        {
+        }
 
-            var expression = Expression.MemberInit(prototypeContainer.ConstructorExpression, memberBindings);
-            Expression<Func<TIdentifier, TEntity>> lambda = Expression.Lambda<Func<TIdentifier, TEntity>>(expression, prototypeContainer.ParameterExpression);
-            Func<TIdentifier, TEntity> getter = lambda.Compile();
+        internal Replicator(IDefaultValuesFactory<TIdentifier> defaultValuesFactory, IPrototypesStorage<TIdentifier> prototypesStorage, ICreationalMethodBuilder<TIdentifier> creationalMethodBuilder)
+        {
+            _defaultValuesFactory = defaultValuesFactory;
+            _prototypesStorage = prototypesStorage;
+            _creationalMethodBuilder = creationalMethodBuilder;
+        }
 
-            return getter(id);
+        public void SetProvider<TValue>(DefaultValueProviderDelegate<TIdentifier, TValue> defaultValueProviderDelegate)
+        {
+            _defaultValuesFactory.SetDefaultValueProvider(defaultValueProviderDelegate);
+        }
+
+        public void SetPrototype<TEntity>(Expression<Func<TIdentifier, TEntity>> prototypeExpression) where TEntity : new()
+        {
+            _prototypesStorage.SetPrototype(prototypeExpression);
+        }
+
+        public TEntity Produce<TEntity>(TIdentifier id, Expression<Func<TEntity>> creationExpression = null)
+            where TEntity : new()
+        {
+            return _creationalMethodBuilder.Produce(id, creationExpression);
         }
     }
 }

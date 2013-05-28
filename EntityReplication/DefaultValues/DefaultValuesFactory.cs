@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace EntityReplication
+namespace EntityReplication.DefaultValues
 {
-    internal class DefaultValuesFactory<TId>
+    internal class DefaultValuesFactory<TIdentifier> : IDefaultValuesFactory<TIdentifier>
     {
         private readonly Dictionary<Type, Delegate> _defaultValueProviders = new Dictionary<Type, Delegate>();
 
-        internal MemberBinding DefaultValueBinding(ParameterExpression parameterExpression, PropertyInfo propertyInfo)
+        public void SetDefaultValueProvider<TValue>(DefaultValueProviderDelegate<TIdentifier, TValue> defaultValueProviderDelegate)
+        {
+            _defaultValueProviders[typeof(TValue)] = defaultValueProviderDelegate;
+        }
+
+        public MemberBinding DefaultValueBinding(ParameterExpression parameterExpression, PropertyInfo propertyInfo)
         {
             Expression defaultValueExpression = buildBindingExpression(parameterExpression, propertyInfo);
             MemberBinding memberBinding = Expression.Bind(propertyInfo, defaultValueExpression);
@@ -31,11 +36,6 @@ namespace EntityReplication
             _defaultValueProviders.TryGetValue(type, out defaultValueProvider);
 
             return defaultValueProvider;
-        }
-
-        internal void SetDefaultValueProvider<TValue>(DefaultValueProviderDelegate<TId, TValue> defaultValueProviderDelegate)
-        {
-            _defaultValueProviders[typeof(TValue)] = defaultValueProviderDelegate;
         }
     }
 }

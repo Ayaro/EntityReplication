@@ -39,20 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultValueExpressionBuilder.cs" />
-    <Compile Include="DefaultValueProviderDelegate.cs" />
-    <Compile Include="DefaultValuesFactory.cs" />
+    <Compile Include="CreationalMethodBuilder.cs" />
+    <Compile Include="DefaultValues\DefaultValueExpressionBuilder.cs" />
+    <Compile Include="DefaultValues\DefaultValueProviderDelegate.cs" />
+    <Compile Include="DefaultValues\DefaultValuesFactory.cs" />
     <Compile Include="ExpressionParsing\ExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\IExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\ExpressionContainerFactory.cs" />
     <Compile Include="ExpressionParsing\MemberInitExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\NewExpressionContainer.cs" />
     <Compile Include="ExpressionParsing\ParameterizedExpressionContainerBase.cs" />
-    <Compile Include="IPrototypesStorage.cs" />
-    <Compile Include="PrototypesStorage.cs" />
+    <Compile Include="DefaultValues\IDefaultValuesFactory.cs" />
+    <Compile Include="ICreationalMethodBuilder.cs" />
+    <Compile Include="PrototypesStorage\IPrototypesStorage.cs" />
+    <Compile Include="PrototypesStorage\PrototypesStorage.cs" />
     <Compile Include="Replicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PrototypesStorage\SingleBindingPerPropertyComparer.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
